@@ -17,4 +17,12 @@
     position: relative;
     margin: auto;
     background: #555;
+    overflow: hidden;
+}
+.line {
+    position: absolute;
+    width: 10px;
+    height: 50px;
+    background: white;
+    left: 145px;
 }
