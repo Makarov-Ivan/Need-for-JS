@@ -12,6 +12,7 @@ const setting = {
     start: false,
     score: 0,
     speed: 3,
+    trafic:3,
 };
 car.classList.add("car");
 start.addEventListener("click", startGame);
@@ -20,7 +21,7 @@ document.addEventListener("keyup", stopRun);
 
 function startGame() {
     start.classList.add("hide");
-    for (let index = 0; index < 20; index++) {
+    for (let index = 0; index < getQuantityElements(100); index++) {
         const line = document.createElement('div');
         line.classList.add('line');
         line.style.top = (index * 75) + 'px';
@@ -65,6 +66,11 @@ function stopRun(event) {
     event.preventDefault();
     keys[event.key] = false;
 }
+
+function getQuantityElements(heightElement) {
+    return document.documentElement.clientHeight / heightElement +1
+}
+console.log(getQuantityElements(200));
 
 function moveRoad() {
     let lines = document.querySelectorAll('.line')
