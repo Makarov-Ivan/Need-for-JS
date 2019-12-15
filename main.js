@@ -1,8 +1,8 @@
 const score = document.querySelector(".score"),
     start = document.querySelector(".start"),
-    btn1=document.querySelector(".dif1"),
-    btn2=document.querySelector(".dif2"),
-    btn3=document.querySelector(".dif3"),
+    btn1 = document.querySelector(".dif1"),
+    btn2 = document.querySelector(".dif2"),
+    btn3 = document.querySelector(".dif3"),
     gameArea = document.querySelector(".gameArea"),
     car = document.createElement("div");
 const keys = {
@@ -21,17 +21,25 @@ const dificulty = {
     dificultu: 1,
     scoreRate: 500
 };
+const bestScore = {
+    BS: 0
+};
 car.classList.add("car");
 // start.addEventListener("click", startGame);
-btn1.addEventListener("click", function() {setDificulty(1)}, false);
-btn2.addEventListener("click", function() {setDificulty(2)}, false);
-btn3.addEventListener("click", function() {setDificulty(3)}, false);
+btn1.addEventListener("click", function () {
+    setDificulty(1);
+}, false);
+btn2.addEventListener("click", function () {
+    setDificulty(2);
+}, false);
+btn3.addEventListener("click", function () {
+    setDificulty(3);
+}, false);
 document.addEventListener("keydown", startRun);
 document.addEventListener("keyup", stopRun);
 
 function setDificulty(el) {
-    dificulty.dificultu=el;
-    console.log(dificulty);
+    dificulty.dificultu = el;
     startGame();
 }
 
@@ -58,6 +66,7 @@ function startGame() {
         gameArea.appendChild(enemy);
     }
     setting.score = 0;
+    setting.speed=3;
     setting.start = true;
     gameArea.appendChild(car);
     setting.x = car.offsetLeft;
@@ -66,7 +75,7 @@ function startGame() {
 }
 
 function playGame() {
-    setting.score += setting.speed;
+    setting.score =Math.floor( setting.score + setting.speed);
     score.innerHTML = "SCORE:<br>" + setting.score;
     moveRoad();
     moveEnemy();
@@ -87,13 +96,13 @@ function playGame() {
         car.style.top = setting.y + "px";
 
         if (setting.score % dificulty.scoreRate == 0 && dificulty.dificultu == 1) {
-            setting.speed*=1.5;
+            setting.speed *= 1.5;
         }
         if (setting.score % dificulty.scoreRate == 0 && dificulty.dificultu == 2) {
-            setting.speed*=2;
+            setting.speed *= 2;
         }
         if (setting.score % dificulty.scoreRate == 0 && dificulty.dificultu == 3) {
-            setting.speed*=2.5;
+            setting.speed *= 2.5;
         }
         requestAnimationFrame(playGame);
     }
@@ -137,8 +146,16 @@ function moveEnemy() {
                 carRect.left <= enemyRect.right &&
                 carRect.bottom >= enemyRect.top) {
                 setting.start = false;
-                start.classList.remove("hide");
+                if (setting.score >= bestScore.BS) {
+                    bestScore.BS = setting.score;
+                    score.innerHTML = "Congratulations!<br>The new best score:<br>" + setting.score;
+                    start.classList.remove("hide");
+                } else {
+                    score.innerHTML = "SCORE:<br>" + setting.score;
+                    start.classList.remove("hide");
+                }
                 score.style.top = start.offsetHeight + "px";
+                console.log("bestScore.BS: ", bestScore.BS);
             }
             item.y += setting.speed / 2;
             item.style.top = item.y + "px";
