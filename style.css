@@ -26,3 +26,19 @@
     background: white;
     left: 145px;
 }
+.start {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 2em 0;
+    text-align: center;
+    z-index: 200;
+    color: antiquewhite;
+    font-size: 1.5rem;
+    background: #000;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: 700;
+}
