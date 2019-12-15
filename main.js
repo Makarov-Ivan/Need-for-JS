@@ -66,7 +66,7 @@ function startGame() {
         gameArea.appendChild(enemy);
     }
     setting.score = 0;
-    setting.speed=3;
+    setting.speed = 3;
     setting.start = true;
     gameArea.appendChild(car);
     setting.x = car.offsetLeft;
@@ -75,7 +75,7 @@ function startGame() {
 }
 
 function playGame() {
-    setting.score =Math.floor( setting.score + setting.speed);
+    setting.score = Math.floor(setting.score + setting.speed);
     score.innerHTML = "SCORE:<br>" + setting.score;
     moveRoad();
     moveEnemy();
