@@ -21,6 +21,10 @@ document.addEventListener("keyup", stopRun);
 
 function startGame() {
     start.classList.add("hide");
+    score.style.top = "";
+    gameArea.innerHTML = "";
+    car.style.left = "125px";
+    car.style.top = "auto";
     for (let index = 0; index < getQuantityElements(100); index++) {
         const line = document.createElement("div");
         line.classList.add("line");
@@ -32,11 +36,12 @@ function startGame() {
         const enemy = document.createElement("div");
         enemy.classList.add("enemy");
         enemy.y = -100 * setting.trafic * (i + 1);
-        enemy.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';
+        enemy.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + "px";
         enemy.style.top = enemy.y + "px";
-        enemy.style.background = 'transparent url(\'./image/enemy.png\') center / cover no-repeat';
+        enemy.style.background = "transparent url('./image/enemy.png') center / cover no-repeat";
         gameArea.appendChild(enemy);
     }
+    setting.score = 0;
     setting.start = true;
     gameArea.appendChild(car);
     setting.x = car.offsetLeft;
@@ -45,6 +50,8 @@ function startGame() {
 }
 
 function playGame() {
+    setting.score += setting.speed;
+    score.innerHTML = "SCORE:<br>" + setting.score;
     moveRoad();
     moveEnemy();
     if (setting.start) {
@@ -101,19 +108,19 @@ function moveEnemy() {
         function (item) {
             let carRect = car.getBoundingClientRect();
             let enemyRect = item.getBoundingClientRect();
-            if (carRect.top <= enemyRect.bottom && 
-                carRect.right >= enemyRect.left && 
-                carRect.left <= enemyRect.right && 
+            if (carRect.top <= enemyRect.bottom &&
+                carRect.right >= enemyRect.left &&
+                carRect.left <= enemyRect.right &&
                 carRect.bottom >= enemyRect.top) {
-                setting.start=false;
-                alert('столкновение');
-
+                setting.start = false;
+                start.classList.remove("hide");
+                score.style.top = start.offsetHeight + "px";
             }
             item.y += setting.speed / 2;
             item.style.top = item.y + "px";
             if (item.y >= document.documentElement.clientHeight) {
                 item.y = -100 * setting.trafic;
-                item.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + 'px';
+                item.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + "px";
             }
         }
     );
