@@ -1,5 +1,8 @@
 const score = document.querySelector(".score"),
     start = document.querySelector(".start"),
+    btn1=document.querySelector(".dif1"),
+    btn2=document.querySelector(".dif2"),
+    btn3=document.querySelector(".dif3"),
     gameArea = document.querySelector(".gameArea"),
     car = document.createElement("div");
 const keys = {
@@ -14,10 +17,26 @@ const setting = {
     speed: 3,
     trafic: 3,
 };
+const dificulty = {
+    dificultu: 1,
+    scoreRate: 500
+};
+const bestScore={
+    BS:0
+};
 car.classList.add("car");
-start.addEventListener("click", startGame);
+// start.addEventListener("click", startGame);
+btn1.addEventListener("click", function() {setDificulty(1)}, false);
+btn2.addEventListener("click", function() {setDificulty(2)}, false);
+btn3.addEventListener("click", function() {setDificulty(3)}, false);
 document.addEventListener("keydown", startRun);
 document.addEventListener("keyup", stopRun);
+
+function setDificulty(el) {
+    dificulty.dificultu=el;
+    console.log(dificulty);
+    startGame();
+}
 
 function startGame() {
     start.classList.add("hide");
@@ -38,7 +57,7 @@ function startGame() {
         enemy.y = -100 * setting.trafic * (i + 1);
         enemy.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + "px";
         enemy.style.top = enemy.y + "px";
-        enemy.style.background = "transparent url('./image/enemy.png') center / cover no-repeat";
+        enemy.style.background = enemyRandomiser();
         gameArea.appendChild(enemy);
     }
     setting.score = 0;
@@ -70,6 +89,15 @@ function playGame() {
         car.style.left = setting.x + "px";
         car.style.top = setting.y + "px";
 
+        if (setting.score % dificulty.scoreRate == 0 && dificulty.dificultu == 1) {
+            setting.speed*=1.5;
+        }
+        if (setting.score % dificulty.scoreRate == 0 && dificulty.dificultu == 2) {
+            setting.speed*=2;
+        }
+        if (setting.score % dificulty.scoreRate == 0 && dificulty.dificultu == 3) {
+            setting.speed*=2.5;
+        }
         requestAnimationFrame(playGame);
     }
 }
@@ -87,7 +115,6 @@ function stopRun(event) {
 function getQuantityElements(heightElement) {
     return document.documentElement.clientHeight / heightElement + 1;
 }
-console.log(getQuantityElements(200));
 
 function moveRoad() {
     let lines = document.querySelectorAll(".line");
