@@ -21,9 +21,6 @@ const dificulty = {
     dificultu: 1,
     scoreRate: 500
 };
-const bestScore={
-    BS:0
-};
 car.classList.add("car");
 // start.addEventListener("click", startGame);
 btn1.addEventListener("click", function() {setDificulty(1)}, false);
