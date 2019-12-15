@@ -28,7 +28,7 @@ function startGame() {
     for (let index = 0; index < getQuantityElements(100); index++) {
         const line = document.createElement("div");
         line.classList.add("line");
-        line.style.top = (index * 75) + "px";
+        line.style.top = ((index++) * 75) + "px";
         line.y = index * 100;
         gameArea.appendChild(line);
     }
@@ -96,7 +96,7 @@ function moveRoad() {
             line.y += setting.speed;
             line.style.top = line.y + "px";
             if (line.y >= document.documentElement.clientHeight) {
-                line.y = -100;
+                line.y = -75;
             }
         }
     );
@@ -121,7 +121,16 @@ function moveEnemy() {
             if (item.y >= document.documentElement.clientHeight) {
                 item.y = -100 * setting.trafic;
                 item.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 50)) + "px";
+                item.style.background = enemyRandomiser();
             }
         }
     );
+}
+
+function enemyRandomiser() {
+    if (Math.random() > 0.5) {
+        return ("transparent url('./image/enemy.png') center / cover no-repeat");
+    } else {
+        return ("transparent url('./image/enemy2.png') center / cover no-repeat");
+    }
 }
